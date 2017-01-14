@@ -1,0 +1,19 @@
+Q1: What is the difference between EBS and S3?
+
+S3 stores objects without a hierarchy. It'd be a good place to store historical data that doesn't require much I/O functionality. EBS is block storage, and does store objects with a hierarchy much like an external drive for a desktop computer. EBS is more dynamic in that it can handle more I/O requests. EBS is commonly used to store data when EC2 instances are not active.
+
+Q2: When would you consider a cloud infrastructure for your data science tasks?
+
+I would consider a cloud infrastructure as my data science tasks get large enough that I can no longer complete them on one machine. A task could be memory intensive, could encompass more data than will fit on one computer, or I may just want it to finish faster than it would on my laptop.
+
+Q3: What is the difference between spot instances and reserved instances?
+
+A reserved instance is yours for however long the contracts specifies. They're generally used in situations that have a steady usage rate. Spot instances are like on-demand intances, but can be shut down if other users that require higher capacity and are willing to pay more. They should be used if the deadline is flexible, and lower prices are needed.
+
+Q4: List the names of four software packages installed on the UCB AMI
+
+See the snapshot. I'm not exactly where to look to find all of the installed packages, but I saw:
+-ipython
+-streamparse
+-pgxl-deployment-tools
+-hadoop
