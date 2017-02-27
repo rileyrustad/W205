@@ -24,7 +24,7 @@ STATE
 CONDITION, 
 MEASURE_ID, 
 MEASURE_NAME, 
-CAST(SCORE AS INT), 
+CAST(SCORE AS INT)
 FROM effective_care;
 
 -- effective_care_state
