@@ -3,8 +3,8 @@
 In this assignment I'll be exploring the Hospital Consumer Assessment of Healthcare Providers and Systems - 2016 Dataset. I'll be evaluating hospitals based on their scores on key measures.
 
 ### 0. Log in
-``1.`` SSH into your UCB Spring AMI on AWS
-``2.`` Mount EBS Volume and get HDFS running
+`1.` SSH into your UCB Spring AMI on AWS
+`2.` Mount EBS Volume and get HDFS running
 
 ```sh
 mount -t ext4 /dev/<your device> /data
@@ -13,19 +13,19 @@ mount -t ext4 /dev/<your device> /data
 su - w205
 /data/start_metastore.sh
 ```
-``3.`` Clone this git repository and navigate to the exercise_1 directory
+`3.` Clone this git repository and navigate to the exercise_1 directory
 git clone git@github.com:rileyrustad/W205.git
 cd W205/exercise_1
 ```
 
 ### 1. Load the Data
-``1.`` Run the load_data_lake script. This downloads the data, cleans it, and loads it into HDFS (See Comments in [Code](TODO) for additional detail)
+`1.` Run the load_data_lake script. This downloads the data, cleans it, and loads it into HDFS (See Comments in [Code](TODO) for additional detail)
 
 ```sh
 loading_and_modelling/load_data_lake.sh
 ```
 
-``2.`` Run the hive_base_ddl.sql to load the tables in Hive (See Comments in [Code](TODO) for additional detail)
+`2.` Run the hive_base_ddl.sql to load the tables in Hive (See Comments in [Code](TODO) for additional detail)
 
 ```sh
 hive -f loading_and_modelling/hive_base_ddl.sql
