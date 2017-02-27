@@ -14,7 +14,7 @@ su - w205
 /data/start_metastore.sh
 ```
 
-3. Clone this git repository and navigate to the exercise_1 directory
+`3.` Clone this git repository and navigate to the exercise_1 directory
 git clone git@github.com:rileyrustad/W205.git
 cd W205/exercise_1
 ```
