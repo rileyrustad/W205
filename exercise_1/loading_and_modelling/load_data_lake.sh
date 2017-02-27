@@ -1,15 +1,9 @@
 #!/bin/bash
-# Script that loads and models Hospital Data
-# Run this script as the w205 user
 
-# # Download the Dataset
-# wget -O hospital.zip https://data.medicare.gov/views/bg9k-emty/files/6c902f45-e28b-42f5-9f96-ae9d1e583472?content_type=application%2Fzip%3B%20charset%3Dbinary&filename=Hospital_Revised_Flatfiles.zip
 
-# # unzip the data into a temporary directory
-# mkdir temp_data
-# unzip hospital.zip -d temp_data
-
-./.load.sh
+# unzip the data into a temporary directory
+mkdir data/temp_data
+unzip hospital.zip -d temp_data
 
 
 # Move relevant data to data directory. (I recognize that in production, duplicating data may not be wise, but I like to keep my workspace clean)
