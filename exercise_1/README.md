@@ -15,28 +15,31 @@ su - w205
 ```
 
 `3.` Clone this git repository and navigate to the exercise_1 directory
+```
 git clone git@github.com:rileyrustad/W205.git
 cd W205/exercise_1
 ```
 
 ### 1. Load the Data
-1. Run the load_data_lake script. This downloads the data, cleans it, and loads it into HDFS (See Comments in [Code](TODO) for additional detail)
+
+1. Run the load_data_lake script. This downloads the data, cleans it, and loads it into HDFS (See Comments in [Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/loading_and_modelling/load_data_lake.sh) for additional detail)
 
 ```sh
 loading_and_modelling/load_data_lake.sh
 ```
 
-2. Run the hive_base_ddl.sql to load the tables in Hive (See Comments in [Code](TODO) for additional detail)
+2. Run the hive_base_ddl.sql to load the tables in Hive (See Comments in [Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/loading_and_modelling/hive_base_ddl.sql) for additional detail)
 
 ```sh
 hive -f loading_and_modelling/hive_base_ddl.sql
 ```
 
-### 2. Transform the Data. For the most part this is parsing data down to only the columns that we need and casting some columns to new data types.
+### 2. Transform the Data. For the most part this is parsing data down to only the columns that we need and casting some columns to new data types. [Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/transforming/transform.sql)
 
 ```sh
 hive -f transforming/transform.sql
 ```
+
 Here is the ER Diagram for the schema that I designed for my tables. 
 [](loading_and_modelling/ERDiagram.png)
 
@@ -46,7 +49,7 @@ Here is the ER Diagram for the schema that I designed for my tables.
 
 Given that we're prompted to look for high scores for a variety or procedures, I would say that the best place to look is the "Timely and Effective - Hospital" data. It measures individual hospitals on 22 different procedures, and gives them a score. That said, the scores aren't uniform some only go up to 100, and others range well beyond 1000. They'll need to be normalized if we want to do anything with them.
 
-My plan of attack is to create normalized values between 0 and 1 for each of these procedures/hospital combinations, and then average them. There were some interesting/hacky things that I had to do to get there, but I was able to score them. (See Comments in [Code](TODO) for additional detail)
+My plan of attack is to create normalized values between 0 and 1 for each of these procedures/hospital combinations, and then average them. There were some interesting/hacky things that I had to do to get there, but I was able to score them. (See Comments in [Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/investigations/best_hospitals/best_hospitals.sql) for additional detail)
 
 Run the Code:
 
@@ -64,30 +67,23 @@ SPOILER ALERT: I found that the aggregated scores from this step negatively corr
 
 ##### What states are models of high-quality care?
 
-I did the identical Procedure as above just switching to the "Timely and Effective -State" dataset. There were only a few tweaks that I needed to make. Here's the [Code](TODO).
+I did the identical Procedure as above just switching to the "Timely and Effective -State" dataset. There were only a few tweaks that I needed to make. Here's the [Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/investigations/best_states/best_states.sql).
 
 ```sh
 hive -f investigations/best_states/best_states.sql
 ```
 
-##### Which procedures have the greatest variability between hospitals?
+##### Which procedures have the greatest variability between hospitals?[Code](https://github.com/rileyrustad/W205/tree/master/exercise_1/investigations/hospital_variability)
 
 ```sh
 hive -f investigations/hospital_variability/hospital_variability.sql
 ```
 
-##### Are average scores for hospital quality or procedural variability correlated with patient survey responses?
+##### Are average scores for hospital quality or procedural variability correlated with patient survey responses? [Code](https://github.com/rileyrustad/W205/tree/master/exercise_1/investigations/hospital_variability)
 
 ```sh
 hive -f investigations/hospitals_and_patients/hospitals_and_patients.sql
 ```
-
-
-
-
-TODO: Explain your hack around "ones" Which is basically a cross join with no real relationship. Every value crossed with every value. In our case its only one row being crossed against another table, so the size remains the same.
-
-
 
 ### Further Investigation
 
