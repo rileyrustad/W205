@@ -201,3 +201,29 @@ AND T > 5
 SORT BY SCORE DESC;
 
 select * from best_hospital limit 10;
+
+-- Spoiler Alert - Jumping ahead, this analysis doesn't correlate 
+-- positively with survey responses, which is against my intuition. 
+-- I'd like to try another dataset
+
+DROP TABLE avg_readmissions;
+CREATE TABLE avg_readmissions
+ROW FORMAT DELIMITED 
+AS SELECT 
+PROVIDER_ID,
+AVG(SCORE) as SCORE
+FROM 
+cleaned_readmissions GROUP BY provider_id;
+
+
+
+
+
+
+
+
+
+
+
+
+

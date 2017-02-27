@@ -14,11 +14,9 @@ unzip hospital.zip -d temp_data
 mkdir data
 tail -n +2 temp_data/"Hospital General Information.csv" > data/hospitals.csv
 tail -n +2 temp_data/"Timely and Effective Care - Hospital.csv" > data/effective_care.csv
-tail -n +2 temp_data/"Readmissions and Deaths - Hospital.csv" > data/readmissions.csv
-tail -n +2 temp_data/"Measure Dates.csv" > data/measures.csv
-tail -n +2 temp_data/"hvbp_hcahps_11_10_2016.csv" > data/survey_responses.csv
-tail -n +2 temp_data/"Payment and Value of Care - Hospital.csv" > data/payment.csv
 tail -n +2 temp_data/"Timely and Effective Care - State.csv" > data/effective_care_state.csv
+tail -n +2 temp_data/"Readmissions and Deaths - Hospital.csv" > data/readmissions.csv
+tail -n +2 temp_data/"Payment and Value of Care - Hospital.csv" > data/payment.csv
 tail -n +2 temp_data/"HCAHPS - Hospital.csv" > data/hcahps.csv
 
 
@@ -31,8 +29,6 @@ hdfs dfs -mkdir hospital_compare/hospitals
 hdfs dfs -mkdir hospital_compare/effective_care
 hdfs dfs -mkdir hospital_compare/effective_care_state
 hdfs dfs -mkdir hospital_compare/readmissions
-hdfs dfs -mkdir hospital_compare/measures
-hdfs dfs -mkdir hospital_compare/survey_responses
 hdfs dfs -mkdir hospital_compare/payment
 hdfs dfs -mkdir hospital_compare/hcahps
 
@@ -42,8 +38,6 @@ hdfs dfs -put data/hospitals.csv hospital_compare/hospitals
 hdfs dfs -put data/effective_care.csv hospital_compare/effective_care
 hdfs dfs -put data/effective_care_state.csv hospital_compare/effective_care_state
 hdfs dfs -put data/readmissions.csv hospital_compare/readmissions
-hdfs dfs -put data/measures.csv hospital_compare/measures
-hdfs dfs -put data/survey_responses.csv hospital_compare/survey_responses
 hdfs dfs -put data/payment.csv hospital_compare/payment
 hdfs dfs -put data/hcahps.csv hospital_compare/hcahps
 

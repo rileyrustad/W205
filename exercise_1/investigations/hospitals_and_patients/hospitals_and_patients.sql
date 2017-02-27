@@ -122,8 +122,18 @@ SORT BY SCORE DESC;
 
 -- select * from best_hcahps limit 10;
 
+-- "Correlation between survey responses and procedure scores"
+
 SELECT corr(a.SCORE, b.SCORE)
-FROM best_hcahps a INNER JOIN avg_hospital b 
+FROM best_hcahps a INNER JOIN best_hospital b 
 on a.PROVIDER_ID = b.PROVIDER_ID;
 
+
+-- Other analysis, recheck with more uniform readmissions data
+
+-- "Correlation between survey responses and readmissions scores"
+
+SELECT corr(a.SCORE, b.SCORE)
+FROM best_hcahps a INNER JOIN avg_readmissions b 
+on a.PROVIDER_ID = b.PROVIDER_ID;
 

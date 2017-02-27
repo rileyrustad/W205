@@ -176,8 +176,8 @@ GROUP BY STATE;
 select * from counts_state limit 5;
 
 
-DROP TABLE avg_state;
-CREATE TABLE avg_state
+DROP TABLE best_state;
+CREATE TABLE best_state
 ROW FORMAT DELIMITED 
 AS SELECT 
 STATE,
@@ -186,4 +186,4 @@ from counts_state
 WHERE T > 5
 SORT BY SCORE DESC;
 
-select * from avg_state limit 10;
+select * from best_state limit 10;
