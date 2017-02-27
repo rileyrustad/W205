@@ -73,13 +73,15 @@ I did the identical Procedure as above just switching to the "Timely and Effecti
 hive -f investigations/best_states/best_states.sql
 ```
 
-##### Which procedures have the greatest variability between hospitals?[Code](https://github.com/rileyrustad/W205/tree/master/exercise_1/investigations/hospital_variability)
+##### Which procedures have the greatest variability between hospitals? 
+I was able to get the variances, but couldn't stack them back up again so that a variance can be connected to its actual name. Its name is the column name, but it'd be nice if it were in the same row as the variance. [Code](https://github.com/rileyrustad/W205/tree/master/exercise_1/investigations/hospital_variability)
 
 ```sh
 hive -f investigations/hospital_variability/hospital_variability.sql
 ```
 
-##### Are average scores for hospital quality or procedural variability correlated with patient survey responses? [Code](https://github.com/rileyrustad/W205/tree/master/exercise_1/investigations/hospital_variability)
+##### Are average scores for hospital quality or procedural variability correlated with patient survey responses? 
+The data that I chose to work with ended up being negatively correlated. See [Code](https://github.com/rileyrustad/W205/tree/master/exercise_1/investigations/hospital_variability) for more details.
 
 ```sh
 hive -f investigations/hospitals_and_patients/hospitals_and_patients.sql
