@@ -14,10 +14,15 @@ su - w205
 /data/start_metastore.sh
 ```
 
-`3.` Clone this git repository and navigate to the exercise_1 directory
-```
-git clone git@github.com:rileyrustad/W205.git
-cd W205/exercise_1
+`3.` Download my git repository and navigate to the exercise_1 directory
+
+I couldn't git clone for some reason without setting up ssh keys. Easier just to download
+
+```sh
+wget -O W205.zip https://github.com/rileyrustad/W205/archive/master.zip
+unzip W205.zip
+rm W205.zip
+cd W205-master/exercise_1
 ```
 
 ### 1. Load the Data
