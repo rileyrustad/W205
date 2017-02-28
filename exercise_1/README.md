@@ -55,7 +55,7 @@ Here is the ER Diagram for the schema that I designed for my tables.
 
 Given that we're prompted to look for high scores for a variety or procedures, I would say that the best place to look is the "Timely and Effective - Hospital" data. It measures individual hospitals on 22 different procedures, and gives them a score. That said, the scores aren't uniform some only go up to 100, and others range well beyond 1000. They'll need to be normalized if we want to do anything with them.
 
-My plan of attack is to create normalized values between 0 and 1 for each of these procedures/hospital combinations, and then average them. There were some interesting/hacky things that I had to do to get there, but I was able to score them. (See Comments in [Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/investigations/best_hospitals/best_hospitals.sql) for additional detail)
+My plan is to create normalized values between 0 and 1 for each of these procedures/hospital combinations, and then average them for each hospital. There were some interesting/hacky things that I had to do to get there, but I was able to score them. (See Comments in [Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/investigations/best_hospitals/best_hospitals.sql) for additional detail)
 
 Run the Code:
 
@@ -118,7 +118,7 @@ TODO
 
 ##### Are average scores for hospital quality or procedural variability correlated with patient survey responses? 
 
-I had originally chosen the "Timely and Effective" dataset to run this analysis, and got a negative correlation. After further exploration, that dataset has both positive and negative measures, making it more complex. I chose to run the correlation on the readmissions data instead. This also produced a negative correlation, but that is to be expected since the report states that "Lower percentages[SCORES] for readmission and mortality are better." Overall we did see that as deaths and readmissions went down, that the survey results tended to be better.[Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/investigations/hospitals_and_patients/hospitals_and_patients.sql)
+I had originally chosen the "Timely and Effective" dataset to run this analysis, and got a negative correlation. After further exploration, that dataset has both positive and negative measures, making it difficult to arrive at a confident answer. I chose to run the correlation on the readmissions data instead. This also produced a negative correlation, but that is to be expected since the report states that "Lower percentages[SCORES] for readmission and mortality are better." Overall we did see that as deaths and readmissions went down, that the survey results tended to be better.[Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/investigations/hospitals_and_patients/hospitals_and_patients.sql)
 
 ```sh
 hive -f investigations/hospitals_and_patients/hospitals_and_patients.sql
@@ -134,6 +134,8 @@ TODO
 Given more time I'd like to split out the positive and negative measures of "Timely and Effective Care" and run analysis on them separately. See Table Below for Broken out measures.
 
 I also noticed that there were footnotes in most of the datasets, which gave more information about the sampling for specific measures. Things like "The number of cases/patients is too few to report.", "Data submitted were based on a sample of cases/patients.", and  "Results are based on a shorter time period than required." As of this point, my analysis doesn't take any of those into account. This information could be used to qualify/disqualify or maybe weight data to get a more accurate model.
+
+Last, I'd like to dig into the payments datasets to see whether the cost of a procedure correlates with the quality of the care one recieves.
 
 | Measure ID | +/- | Measure Description |
 | --- | --- | --- |
