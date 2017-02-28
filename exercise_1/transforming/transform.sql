@@ -6,11 +6,7 @@ ROW FORMAT DELIMITED
 -- ROW FORMAT DELIMITED 
 AS SELECT 
 CAST(PROVIDER_ID AS INT), 
-HOSPITAL_NAME, 
-CITY, 
-STATE, 
-HOSPITAL_TYPE,
-HOSPITAL_OWNERSHIP
+HOSPITAL_NAME
 FROM hospitals;
 
 -- effective_care
@@ -20,24 +16,7 @@ CREATE TABLE cleaned_effective_care
 ROW FORMAT DELIMITED
 AS SELECT 
 CAST(PROVIDER_ID AS INT), 
-STATE
-CONDITION, 
-MEASURE_ID, 
-MEASURE_NAME, 
-CAST(SCORE AS INT)
-FROM effective_care;
-
--- effective_care_state
-
-DROP TABLE cleaned_effective_care_state;
-CREATE TABLE cleaned_effective_care_state
-ROW FORMAT DELIMITED
-AS SELECT 
-CAST(PROVIDER_ID AS INT), 
-STATE,
-CONDITION, 
-MEASURE_ID, 
-MEASURE_NAME, 
+MEASURE_ID,
 CAST(SCORE AS INT)
 FROM effective_care;
 
@@ -50,9 +29,22 @@ AS SELECT
 CAST(PROVIDER_ID AS INT),
 MEASURE_ID,
 CAST(SCORE AS FLOAT),
-LOWER_ESTIMATE,
-HIGHER_ESTIMATE
+CAST(LOWER_ESTIMATE AS FLOAT), -- Unused, but could be used for future investigation
+CAST(HIGHER_ESTIMATE AS FLOAT) -- Unused, but could be used for future investigation
 FROM readmissions;
+
+-- readmissions_state
+
+DROP TABLE cleaned_readmissions_state;
+CREATE TABLE cleaned_readmissions_state
+ROW FORMAT DELIMITED
+AS SELECT
+STATE,
+MEASURE_ID,
+CAST(SCORE AS FLOAT),
+CAST(LOWER_ESTIMATE AS FLOAT),-- Unused, but could be used for future investigation
+CAST(HIGHER_ESTIMATE AS FLOAT)-- Unused, but could be used for future investigation
+FROM readmissions_state;
 
 -- hcahps
 

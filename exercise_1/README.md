@@ -61,6 +61,7 @@ Run the Code:
 
 ```sh
 hive -f investigations/best_hospitals/best_hospitals.sql
+hive -e 'select * from best_hospital limit 10;'
 ```
 
 1. Unstack the procedures so that each row corresponds to a hospital, and each column corresponds to a procedure
@@ -71,11 +72,14 @@ hive -f investigations/best_hospitals/best_hospitals.sql
 
 SPOILER ALERT: I found that the aggregated scores from this step negatively correlated with the survey data, which I found suspicious. One would expect higher scores would positively correlate with positive survey data. It makes me think that maybe some of those scores might not all be positively correlated measures, or that there are some really skewed distributions. 
 
-After Further Research, it turns out that the scores in the "Timely and Effective Care" dataset are mixed positive and negative measures. In order to correct for this I ran a similar analysis on "Readmissions and Deaths dataset"
+After Further Research, it turns out that the scores in the "Timely and Effective Care" dataset are mixed positive and negative measures. In order to correct for this I ran a similar analysis on "Readmissions and Deaths" dataset, which explicitly says "Lower percentages for readmission and mortality are better". So this time we should expect a negative correlation.
 
 ```sh
 hive -f investigations/best_hospitals/best_hospitals_readmissions.sql
+hive -e 'select * from best_hospital limit 10;'
 ```
+
+Note: I had a difficult time getting hive to output results when the final query was in the script, so I had to run the command in a separate line.
 
 Here were the results:
 
@@ -83,35 +87,53 @@ TODO
 
 
 
-
-
 ##### What states are models of high-quality care?
 
-I did the identical Procedure as above just switching to the "Readmissions and Deaths - State" dataset. There were only a few tweaks that I needed to make. Here's the [Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/investigations/best_states/best_states.sql).
+I did the identical procedure as above just switching to the "Readmissions and Deaths - State" dataset. There were only a few tweaks that I needed to make. Here's the [Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/investigations/best_states/best_states.sql).
 
 ```sh
 hive -f investigations/best_states/best_states.sql
+hive -e 'select * from best_state limit 10;'
 ```
 
+Here were my results:
+
+TODO
+
 ##### Which procedures have the greatest variability between hospitals? 
-I was able to get the variances, but couldn't stack them back up again so that a variance can be connected to its actual name. Its name is the column name, but it'd be nice if it were in the same row as the variance. [Code](https://github.com/rileyrustad/W205/tree/master/exercise_1/investigations/hospital_variability)
+I considered normalizing the data like in the previous problem, but since variance is dependent upon how spread out the data is, I thought that that might skew the results. I recognize that each procedure is fundamentally different, has different ranges, distributions, etc. That said, I've interpreted the question of variability as which procedure has the highest variance. 
+
+This becomes a simple query. Find the variance of the scores, and group them by measure ID.
+
+[Code](https://github.com/rileyrustad/W205/tree/master/exercise_1/investigations/hospital_variability)
 
 ```sh
 hive -f investigations/hospital_variability/hospital_variability.sql
+select * from variablity limit 10;
 ```
 
+Here were my results:
+
+TODO
+
 ##### Are average scores for hospital quality or procedural variability correlated with patient survey responses? 
-The data that I chose to work with ended up being negatively correlated. See [Code](https://github.com/rileyrustad/W205/tree/master/exercise_1/investigations/hospital_variability) for more details.
+
+I had originally chosen the "Timely and Effective" dataset to run this analysis, and got a negative correlation. After further exploration, that dataset has both positive and negative measures, making it more complex. I chose to run the correlation on the readmissions data instead. This also produced a negative correlation, but that is to be expected since the report states that "Lower percentages[SCORES] for readmission and mortality are better." Overall we did see that as deaths and readmissions went down, that the survey results tended to be better.[Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/investigations/hospitals_and_patients/hospitals_and_patients.sql)
 
 ```sh
 hive -f investigations/hospitals_and_patients/hospitals_and_patients.sql
+hive -e "SELECT corr(a.SCORE, b.SCORE) FROM best_hcahps a INNER JOIN avg_readmissions b on a.PROVIDER_ID = b.PROVIDER_ID;"
 ```
 
-### Further Investigation
+Here were my results:
+
+TODO
+
+### Further Investigations
 
 Given more time I'd like to split out the positive and negative measures of "Timely and Effective Care" and run analysis on them separately. See Table Below for Broken out measures.
 
-I also noticed that there were footnotes in the "timely and effective" dataset, which gave more information about the sampling for specific measures. Things like "The number of cases/patients is too few to report.", "Data submitted were based on a sample of cases/patients.", and  "Results are based on a shorter time period than required." As of this point, my analysis doesn't take any of those into account. This information could be used to qualify/disqualify or maybe weight data to get a more accurate model.
+I also noticed that there were footnotes in most of the datasets, which gave more information about the sampling for specific measures. Things like "The number of cases/patients is too few to report.", "Data submitted were based on a sample of cases/patients.", and  "Results are based on a shorter time period than required." As of this point, my analysis doesn't take any of those into account. This information could be used to qualify/disqualify or maybe weight data to get a more accurate model.
 
 | Measure ID | +/- | Measure Description |
 | --- | --- | --- |

@@ -1,3 +1,5 @@
+-- I wasn't sure how to pick and choose fields to keep,
+-- so each table pulls in all fields from the CSV files.
 
 -- hospitals
 
@@ -75,30 +77,6 @@ WITH SERDEPROPERTIES (
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/effective_care';
 
--- effective_care_state
-
-DROP TABLE effective_care_state;
-
-CREATE EXTERNAL TABLE effective_care_state (
-STATE string, 
-CONDITION string, 
-MEASURE_NAME string, 
-MEASURE_ID string, 
-SCORE string, 
-FOOTNOTE string, 
-MEASURE_START_DATE string,
-MEASURE_END_DATE string
-)
-
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
-WITH SERDEPROPERTIES (
-   "separatorChar" = ",",
-   "quoteChar"     = '"',
-   "escapeChar"    = '\\'
-)
-STORED AS TEXTFILE
-LOCATION '/user/w205/hospital_compare/effective_care_state';
-
 -- readmissions
 
 DROP TABLE readmissions;
@@ -119,6 +97,31 @@ DENOMINATOR string,
 SCORE string, 
 LOWER_ESTIMATE string, 
 HIGHER_ESTIMATE string, 
+FOOTNOTE string, 
+MEASURE_START_DATE string,
+MEASURE_END_DATE string
+)
+
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+WITH SERDEPROPERTIES (
+   "separatorChar" = ",",
+   "quoteChar"     = '"',
+   "escapeChar"    = '\\'
+)
+STORED AS TEXTFILE
+LOCATION '/user/w205/hospital_compare/readmissions';
+
+-- readmissions_state
+
+DROP TABLE readmissions_state;
+CREATE EXTERNAL TABLE readmissions_state (
+STATE string,
+MEASURE_NAME string, 
+MEASURE_ID string, 
+NUMBER_OF_HOSPITALS_WORSE string, 
+NUMBER_OF_HOSPITALS_SAME string, 
+NUMBER_OF_HOSPITALS_BETTER string, 
+NUMBER_OF_HOSPITALS_TOO_FEW string,
 FOOTNOTE string, 
 MEASURE_START_DATE string,
 MEASURE_END_DATE string

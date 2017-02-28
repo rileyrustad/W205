@@ -33,6 +33,7 @@ min(CASE WHEN MEASURE_ID = 'VTE_6' THEN SCORE END) AS VTE_6
 FROM cleaned_effective_care
 GROUP BY PROVIDER_ID;
 
+-- select * from unstack_hospital limit 10;
 
 -- 2. Find the Min Max and Range of each procedure distribution.
 
@@ -109,6 +110,9 @@ MIN(VTE_6) AS MinVTE_6,
 MAX(VTE_6)-MIN(VTE_6) AS RangeVTE_6
 FROM unstack_hospital;
 
+-- select * from min_max_hospital limit 10;
+
+
 -- 3. Normalize each data point between 0 and 1 by it's range (Value - Min) / (Max - Min)
 
 DROP TABLE norm_hospital;
@@ -143,6 +147,9 @@ WHERE best.ones = mm.ones; -- This is where the "ones" come in handy.
 -- This is basically a cross join, but min_max_hospital is only one row
 -- so there isn't as much computation as you'd think. It allows us to 
 -- compare the value with its min/max/range values.
+
+-- select * from norm_hospital limit 10;
+
 
 -- 4. Average the values across each row.(This ended up being a huge 
 -- sticking point trying to deal with NULL values. The solution ended 
@@ -179,9 +186,11 @@ SUM(
 (CASE WHEN NormVTE_5 is null THEN 0 ELSE 1 END)+
 (CASE WHEN NormVTE_6 is null THEN 0 ELSE 1 END)) AS T
 -- Similar strategy as above. If value is NULL return 0 or else return 1. 
--- Add up all the ones, and we get the total number of Non NULL Values
+-- Add up all the ones, and we get the total count of Non NULL Values
 from norm_hospital
 GROUP BY PROVIDER_ID;
+
+-- select * from counts_hospital limit 10;
 
 
 -- 5. Join the Averages with the original table on Provider_ID 
@@ -197,33 +206,9 @@ hosp.hospital_name AS hospital_name,
 counts.S/counts.T AS SCORE -- SUM(values)/Count(Values) = Average(Values)
 from counts_hospital counts, hospitals hosp
 WHERE counts.PROVIDER_ID = hosp.PROVIDER_ID
-AND T > 5
+AND T > 5 --make sure hospitals have high enough number of scores to be relevant
 SORT BY SCORE DESC;
 
 select * from best_hospital limit 10;
-
--- Spoiler Alert - Jumping ahead, this analysis doesn't correlate 
--- positively with survey responses, which is against my intuition. 
--- I'd like to try another dataset
-
-DROP TABLE avg_readmissions;
-CREATE TABLE avg_readmissions
-ROW FORMAT DELIMITED 
-AS SELECT 
-PROVIDER_ID,
-AVG(SCORE) as SCORE
-FROM 
-cleaned_readmissions GROUP BY provider_id;
-
-
-
-
-
-
-
-
-
-
-
 
 
