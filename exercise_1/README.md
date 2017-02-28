@@ -71,6 +71,7 @@ hive -e 'select * from best_hospital limit 10;'
 5. Join the Averages with the original table on Provider_ID to get the Hospital Names. Sort Decending, and you should have the top 10 best hospitals.
 
 Here are the results:
+
 |Provider ID|Hospital Name| Score |
 | --- | --- | --- |
 | 050424 | SCRIPPS GREEN HOSPITAL | 0.797940074906367|
