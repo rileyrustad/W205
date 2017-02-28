@@ -79,8 +79,7 @@ After Further Research, it turns out that the scores are non standard. I opted t
 | EDV | Positive |Emergency department volume (alternate Measure ID: EDV-1) |
 | IMM-2 | Positive |Patients assessed and given influenza vaccination |
 | IMM-3  | Positive |Healthcare workers given influenza vaccination (alternate Measure ID: IMM-3_OP_27_FAC_ADHPCT) |
-| OP-1 | Positive |Median time to fibrinolysis. |
-*Not displayed on Hospital Compare, ended up being null in all fields
+| OP-1 | Positive |Median time to fibrinolysis. (Note:Not displayed on Hospital Compare, ended up being null in all fields)|
 | OP-2 | Positive |Outpatients with chest pain or possible heart attack who got drugs to break up blood clots within 30 minutes of arrival |
 | OP-3b | Positive |Average (median) number of minutes before outpatients with chest pain or possible heart attack who needed specialized care were transferred to another hospital |
 | OP-4 | Positive |Outpatients with chest pain or possible heart attack who received aspirin within 24 hours of arrival or before transferring from the emergency department |
