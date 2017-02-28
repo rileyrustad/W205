@@ -33,7 +33,7 @@ cd W205-master/exercise_1
 loading_and_modelling/load_data_lake.sh
 ```
 
-2. Run the hive_base_ddl.sql to load the tables in Hive (See Comments in [Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/loading_and_modelling/hive_base_ddl.sql) for additional detail)
+`2.` Run the hive_base_ddl.sql to load the tables in Hive (See Comments in [Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/loading_and_modelling/hive_base_ddl.sql) for additional detail)
 
 ```sh
 hive -f loading_and_modelling/hive_base_ddl.sql
