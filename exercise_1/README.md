@@ -71,8 +71,9 @@ hive -f investigations/best_hospitals/best_hospitals.sql
 SPOILER ALERT: I found that the aggregated scores from this step negatively correlated with the survey data, which I found suspicious. One would expect higher scores would positively correlate with positive survey data. It makes me think that maybe some of those scores might not all be positively correlated measures, or that there are some really skewed distributions. 
 
 After Further Research, it turns out that the scores are non standard. I opted to separate what I considered to be "positive" and "negative" measures. The following table shows my breakdown
+
 | Measure ID | +/- | Measure Description |
-| --- |:---:|--- :|
+| --- | --- | --- |
 | ED-1b | Positive | Average (median) time patients spent in the emergency department, before they were admitted to the hospital as an inpatient (alternate Measure ID: ED-1) |
 | ED-2b | Positive | Average (median) time patients spent in the emergency department, after the doctor decided to admit them as an inpatient before leaving the emergency department for their inpatient room (alternate Measure ID: ED-2) |
 | EDV | Positive |Emergency department volume (alternate Measure ID: EDV-1) |
