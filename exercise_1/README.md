@@ -70,33 +70,23 @@ hive -f investigations/best_hospitals/best_hospitals.sql
 
 SPOILER ALERT: I found that the aggregated scores from this step negatively correlated with the survey data, which I found suspicious. One would expect higher scores would positively correlate with positive survey data. It makes me think that maybe some of those scores might not all be positively correlated measures, or that there are some really skewed distributions. 
 
-After Further Research, it turns out that the scores are non standard. I opted to separate what I considered to be "positive" and "negative" measures. The following table shows my breakdown
+After Further Research, it turns out that the scores in the "Timely and Effective Care" dataset are mixed positive and negative measures. In order to correct for this I ran a similar analysis on "Readmissions and Deaths dataset"
 
-| Measure ID | +/- | Measure Description |
-| --- | --- | --- |
-| ED-1b | Positive | Average (median) time patients spent in the emergency department, before they were admitted to the hospital as an inpatient (alternate Measure ID: ED-1) |
-| ED-2b | Positive | Average (median) time patients spent in the emergency department, after the doctor decided to admit them as an inpatient before leaving the emergency department for their inpatient room (alternate Measure ID: ED-2) |
-| EDV | Positive |Emergency department volume (alternate Measure ID: EDV-1) |
-| IMM-2 | Positive |Patients assessed and given influenza vaccination |
-| IMM-3  | Positive |Healthcare workers given influenza vaccination (alternate Measure ID: IMM-3_OP_27_FAC_ADHPCT) |
-| OP-1 | Positive |Median time to fibrinolysis. (Note:Not displayed on Hospital Compare, ended up being null in all fields)|
-| OP-2 | Positive |Outpatients with chest pain or possible heart attack who got drugs to break up blood clots within 30 minutes of arrival |
-| OP-3b | Positive |Average (median) number of minutes before outpatients with chest pain or possible heart attack who needed specialized care were transferred to another hospital |
-| OP-4 | Positive |Outpatients with chest pain or possible heart attack who received aspirin within 24 hours of arrival or before transferring from the emergency department |
-| OP-5 | Positive |Average (median) number of minutes before outpatients with chest pain or possible heart attack got an ECG |
-| OP-18b | Positive |Average (median) time patients spent in the emergency department before leaving from the visit (alternate Measure ID: OP-18) |
-| OP-20 | Positive |Average (median) time patients spent in the emergency department before they were seen by a healthcare professional |
-| OP-21 | Positive |Average (median) time patients who came to the emergency department with broken bones had to wait before getting pain medication |
-| OP-22 | Positive |Percentage of patients who left the emergency department before being seen |
-| OP-23 | Positive |Percentage of patients who came to the emergency department with stroke symptoms who received brain scan results within 45 minutes of arrival |
-| OP-29 | Positive |Percentage of patients receiving appropriate recommendation for follow-up screening colonoscopy |
-| OP-30 | Positive |Percentage of patients with history of polyps receiving follow-up colonoscopy in the appropriate timeframe |
-| OP-31 | Positive |Percentage of patients who had cataract surgery and had improvement in visual function within 90 days following the surgery |
+```sh
+hive -f investigations/best_hospitals/best_hospitals_readmissions.sql
+```
+
+Here were the results:
+
+TODO
+
+
+
 
 
 ##### What states are models of high-quality care?
 
-I did the identical Procedure as above just switching to the "Timely and Effective -State" dataset. There were only a few tweaks that I needed to make. Here's the [Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/investigations/best_states/best_states.sql).
+I did the identical Procedure as above just switching to the "Readmissions and Deaths - State" dataset. There were only a few tweaks that I needed to make. Here's the [Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/investigations/best_states/best_states.sql).
 
 ```sh
 hive -f investigations/best_states/best_states.sql
@@ -118,7 +108,28 @@ hive -f investigations/hospitals_and_patients/hospitals_and_patients.sql
 
 ### Further Investigation
 
-Given more time I'd like to incorporate more data besides the timely and effective data. I was set up to include the readmissions data too, but didn't quite make it.
+Given more time I'd like to split out the positive and negative measures of "Timely and Effective Care" and run analysis on them separately. See Table Below for Broken out measures.
 
 I also noticed that there were footnotes in the "timely and effective" dataset, which gave more information about the sampling for specific measures. Things like "The number of cases/patients is too few to report.", "Data submitted were based on a sample of cases/patients.", and  "Results are based on a shorter time period than required." As of this point, my analysis doesn't take any of those into account. This information could be used to qualify/disqualify or maybe weight data to get a more accurate model.
+
+| Measure ID | +/- | Measure Description |
+| --- | --- | --- |
+| ED-1b | Negative | Average (median) time patients spent in the emergency department, before they were admitted to the hospital as an inpatient (alternate Measure ID: ED-1) |
+| ED-2b | Negative | Average (median) time patients spent in the emergency department, after the doctor decided to admit them as an inpatient before leaving the emergency department for their inpatient room (alternate Measure ID: ED-2) |
+| EDV | NULL | Emergency department volume (alternate Measure ID: EDV-1) |
+| IMM-2 | Positive |Patients assessed and given influenza vaccination |
+| IMM-3  | Positive |Healthcare workers given influenza vaccination (alternate Measure ID: IMM-3_OP_27_FAC_ADHPCT) |
+| OP-1 | Negative |Median time to fibrinolysis. (Note:Not displayed on Hospital Compare, ended up being null in all fields)|
+| OP-2 | Positive |Outpatients with chest pain or possible heart attack who got drugs to break up blood clots within 30 minutes of arrival |
+| OP-3b | Negative |Average (median) number of minutes before outpatients with chest pain or possible heart attack who needed specialized care were transferred to another hospital |
+| OP-4 | Positive |Outpatients with chest pain or possible heart attack who received aspirin within 24 hours of arrival or before transferring from the emergency department |
+| OP-5 | Negative |Average (median) number of minutes before outpatients with chest pain or possible heart attack got an ECG |
+| OP-18b | Negative |Average (median) time patients spent in the emergency department before leaving from the visit (alternate Measure ID: OP-18) |
+| OP-20 | Negative |Average (median) time patients spent in the emergency department before they were seen by a healthcare professional |
+| OP-21 | Negative |Average (median) time patients who came to the emergency department with broken bones had to wait before getting pain medication |
+| OP-22 | Negative |Percentage of patients who left the emergency department before being seen |
+| OP-23 | Positive |Percentage of patients who came to the emergency department with stroke symptoms who received brain scan results within 45 minutes of arrival |
+| OP-29 | Positive |Percentage of patients receiving appropriate recommendation for follow-up screening colonoscopy |
+| OP-30 | Positive |Percentage of patients with history of polyps receiving follow-up colonoscopy in the appropriate timeframe |
+| OP-31 | Positive |Percentage of patients who had cataract surgery and had improvement in visual function within 90 days following the surgery |
 
