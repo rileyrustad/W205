@@ -142,8 +142,9 @@ PROVIDER_ID,
 (best.STK_4 - mm.MinSTK_4)/mm.RangeSTK_4 AS NormSTK_4,
 (best.VTE_5 - mm.MinVTE_5)/mm.RangeVTE_5 AS NormVTE_5,
 (best.VTE_6 - mm.MinVTE_6)/mm.RangeVTE_6 AS NormVTE_6
-FROM unstack_hospital best, min_max_hospital mm
-WHERE best.ones = mm.ones; -- This is where the "ones" come in handy.
+FROM unstack_hospital best, min_max_hospital mm;
+WHERE best.ones = mm.ones; 
+-- This is where the "ones" come in handy.
 -- This is basically a cross join, but min_max_hospital is only one row
 -- so there isn't as much computation as you'd think. It allows us to 
 -- compare the value with its min/max/range values.

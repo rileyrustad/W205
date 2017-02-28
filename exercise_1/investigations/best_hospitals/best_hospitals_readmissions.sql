@@ -104,7 +104,8 @@ PROVIDER_ID,
 (unstack.READM_30_STK - mm.MinREADM_30_STK)/mm.RangeREADM_30_STK As NormREADM_30_STK
 
 FROM unstack_readmissions unstack, min_max_readmissions mm
-WHERE unstack.ones = mm.ones; -- This is where the "ones" come in handy.
+WHERE unstack.ones = mm.ones;
+ -- This is where the "ones" come in handy.
 -- This is basically a cross join, but min_max_readmissions is only one row
 -- so there isn't as much computation as you'd think. It allows us to 
 -- compare the value with its min/max/range values.
@@ -123,20 +124,20 @@ PROVIDER_ID,
 SUM(NVL(NormMORT_30_AMI,0)+NVL(NormMORT_30_CABG,0)+NVL(NormMORT_30_COPD,0)+NVL(NormMORT_30_HF,0)+NVL(NormMORT_30_PN,0)+NVL(NormMORT_30_STK,0)+NVL(NormREADM_30_AMI,0)+NVL(NormREADM_30_CABG,0)+NVL(NormREADM_30_COPD,0)+NVL(NormREADM_30_HF,0)+NVL(NormREADM_30_HIP_KNEE,0)+NVL(NormREADM_30_HOSP_WIDE,0)+NVL(NormREADM_30_PN,0)+NVL(NormREADM_30_STK,0)) AS S,
 -- ^NVL returns the value if not null, and 0 if null. The total sum is everything excluding NULLS
 SUM(
-(CASE WHEN NormMORT_30_AMI is null THEN 0 ESLE 1 END)+
-(CASE WHEN NormMORT_30_CABG is null THEN 0 ESLE 1 END)+
-(CASE WHEN NormMORT_30_COPD is null THEN 0 ESLE 1 END)+
-(CASE WHEN NormMORT_30_HF is null THEN 0 ESLE 1 END)+
-(CASE WHEN NormMORT_30_PN is null THEN 0 ESLE 1 END)+
-(CASE WHEN NormMORT_30_STK is null THEN 0 ESLE 1 END)+
-(CASE WHEN NormREADM_30_AMI is null THEN 0 ESLE 1 END)+
-(CASE WHEN NormREADM_30_CABG is null THEN 0 ESLE 1 END)+
-(CASE WHEN NormREADM_30_COPD is null THEN 0 ESLE 1 END)+
-(CASE WHEN NormREADM_30_HF is null THEN 0 ESLE 1 END)+
-(CASE WHEN NormREADM_30_HIP_KNEE is null THEN 0 ESLE 1 END)+
-(CASE WHEN NormREADM_30_HOSP_WIDE is null THEN 0 ESLE 1 END)+
-(CASE WHEN NormREADM_30_PN is null THEN 0 ESLE 1 END)+
-(CASE WHEN NormREADM_30_STK is null THEN 0 ESLE 1 END)) AS T
+(CASE WHEN NormMORT_30_AMI is null THEN 0 ELSE 1 END)+
+(CASE WHEN NormMORT_30_CABG is null THEN 0 ELSE 1 END)+
+(CASE WHEN NormMORT_30_COPD is null THEN 0 ELSE 1 END)+
+(CASE WHEN NormMORT_30_HF is null THEN 0 ELSE 1 END)+
+(CASE WHEN NormMORT_30_PN is null THEN 0 ELSE 1 END)+
+(CASE WHEN NormMORT_30_STK is null THEN 0 ELSE 1 END)+
+(CASE WHEN NormREADM_30_AMI is null THEN 0 ELSE 1 END)+
+(CASE WHEN NormREADM_30_CABG is null THEN 0 ELSE 1 END)+
+(CASE WHEN NormREADM_30_COPD is null THEN 0 ELSE 1 END)+
+(CASE WHEN NormREADM_30_HF is null THEN 0 ELSE 1 END)+
+(CASE WHEN NormREADM_30_HIP_KNEE is null THEN 0 ELSE 1 END)+
+(CASE WHEN NormREADM_30_HOSP_WIDE is null THEN 0 ELSE 1 END)+
+(CASE WHEN NormREADM_30_PN is null THEN 0 ELSE 1 END)+
+(CASE WHEN NormREADM_30_STK is null THEN 0 ELSE 1 END)) AS T
 -- Similar strategy as above. If value is NULL return 0 or else return 1. 
 -- Add up all the ones, and we get the total number of Non NULL Values
 from norm_readmissions
@@ -154,7 +155,7 @@ CREATE TABLE best_readmissions
 ROW FORMAT DELIMITED 
 AS SELECT 
 hosp.PROVIDER_ID,
-hosp.readmissions_name AS readmissions_name,
+hosp.hospital_name AS readmissions_name,
 counts.S/counts.T AS SCORE -- SUM(values)/Count(Values) = Average(Values)
 from counts_readmissions counts, hospitals hosp
 WHERE counts.PROVIDER_ID = hosp.PROVIDER_ID

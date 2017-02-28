@@ -41,9 +41,9 @@ ROW FORMAT DELIMITED
 AS SELECT
 STATE,
 MEASURE_ID,
-CAST(SCORE AS FLOAT),
-CAST(LOWER_ESTIMATE AS FLOAT),-- Unused, but could be used for future investigation
-CAST(HIGHER_ESTIMATE AS FLOAT)-- Unused, but could be used for future investigation
+CAST(NUMBER_OF_HOSPITALS_WORSE AS FLOAT), 
+CAST(NUMBER_OF_HOSPITALS_SAME AS FLOAT), 
+CAST(NUMBER_OF_HOSPITALS_BETTER AS FLOAT)
 FROM readmissions_state;
 
 -- hcahps
