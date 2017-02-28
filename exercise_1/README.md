@@ -46,7 +46,8 @@ hive -f transforming/transform.sql
 ```
 
 Here is the ER Diagram for the schema that I designed for my tables. 
-[](loading_and_modelling/ERDiagram.png)
+
+![](./loading_and_modelling/ERDiagram.png)
 
 ### 3. Answer the Questions
 
