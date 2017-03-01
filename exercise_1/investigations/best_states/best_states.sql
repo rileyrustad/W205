@@ -1,8 +1,6 @@
 -- set hive.cli.print.header=true;
 
 
-select * from agg_state limit 5;
-
 DROP TABLE agg_state;
 CREATE TABLE agg_state
 ROW FORMAT DELIMITED 
