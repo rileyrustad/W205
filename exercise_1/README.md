@@ -16,7 +16,7 @@ su - w205
 
 `3.` Download and unzip my git repository and navigate to the exercise_1 directory
 
-I couldn't git clone for some reason without setting up ssh keys. Easier just to download
+I couldn't git clone for some reason without setting up ssh keys. It was easier just to download it as a zip file.
 
 ```sh
 wget -O W205.zip https://github.com/rileyrustad/W205/archive/master.zip
@@ -51,7 +51,7 @@ Here is the ER Diagram for the schema that I designed for my tables.
 
 ### 3. Answer the Questions
 
-##### What hospitals are models of high-quality care? That is, which hospitals have the most consistently high scores for a variety of procedures.
+#### What hospitals are models of high-quality care? That is, which hospitals have the most consistently high scores for a variety of procedures.
 
 Given that we're prompted to look for high scores for a variety or procedures, I would say that the best place to look is the "Timely and Effective - Hospital" data. It measures individual hospitals on 22 different procedures, and gives them a score. That said, the scores aren't uniform some only go up to 100, and others range well beyond 1000. They'll need to be normalized if we want to do anything with them.
 
@@ -64,11 +64,13 @@ hive -f investigations/best_hospitals/best_hospitals.sql
 hive -e 'select * from best_hospital limit 10;'
 ```
 
+Note: I had a difficult time getting hive to output results when the final query was in the script, so if they don't display please run the second query line of code.
+
 1. Unstack the procedures so that each row corresponds to a hospital, and each column corresponds to a procedure
-2. Find the Min Max and Range of each procedure distribution.
+2. Find the Min, Max, and Range of each procedure score distribution.
 3. Normalize each data point between 0 and 1 by it's range (Value - Min) / (Max - Min)
-4. Average the values across each row.(This ended up being a huge sticking point trying to deal with NULL values. The solution ended up being to use the NVL() function and conditional statments)
-5. Join the Averages with the original table on Provider_ID to get the Hospital Names. Sort Decending, and you should have the top 10 best hospitals.
+4. Average the values across each row.(This ended up being a huge sticking point trying to deal with NULL values. The solution ended up being to use the NVL() function and conditional statements)
+5. Join the Averages with the original table on Provider_ID to get the Hospital Names. Sort descending, and you should have the top 10 best hospitals.
 
 Here are the results:
 
@@ -94,8 +96,6 @@ hive -f investigations/best_hospitals/best_hospitals_readmissions.sql
 hive -e 'select * from best_hospital limit 10;'
 ```
 
-Note: I had a difficult time getting hive to output results when the final query was in the script, so I had to run the command in a separate line.
-
 Here were the results:
 
 |Provider ID|Hospital Name| Score |
@@ -111,11 +111,9 @@ Here were the results:
 | 181328 | BARBOURVILLE ARH HOSPITAL | 0.5948889850982291 |
 | 251332 | PIONEER HEALTH SERVICES OF NEWTON | 0.5910228274027837 |
 
+#### What states are models of high-quality care?
 
-
-##### What states are models of high-quality care?
-
-I did the identical procedure as above just switching to the "Readmissions and Deaths - State" dataset. There were only a few tweaks that I needed to make. Here's the [Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/investigations/best_states/best_states.sql).
+I did the identical procedure as above just switching to the "Readmissions and Deaths - State" dataset. Here rather than a score, they classified each state and procedure by "worse", "same", or "better" than the national average. My analysis took the average of all of the procedures. I gave -1 point for below and +1 point for above average, and then divided by the total number of procedures. States with procedures that are higher than average will have a positive score, and states with procedures below average will have a negative score. Here's the [Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/investigations/best_states/best_states.sql).
 
 ```sh
 hive -f investigations/best_states/best_states.sql
@@ -136,16 +134,14 @@ Here were my results:
 |CO | 0.01765650080256822 |
 |MA | 0.017639077340569877 |
 
-##### Which procedures have the greatest variability between hospitals? 
+#### Which procedures have the greatest variability between hospitals? 
 I considered normalizing the data like in the previous problem, but since variance is dependent upon how spread out the data is, I thought that that might skew the results. I recognize that each procedure is fundamentally different, has different ranges, distributions, etc. That said, I've interpreted the question of variability as which procedure has the highest variance. 
 
-This becomes a simple query. Find the variance of the scores, and group them by measure ID.
-
-[Code](https://github.com/rileyrustad/W205/tree/master/exercise_1/investigations/hospital_variability)
+This becomes a simple query. Group them by measure ID, and find the variance of the scores.[Code](https://github.com/rileyrustad/W205/tree/master/exercise_1/investigations/hospital_variability)
 
 ```sh
 hive -f investigations/hospital_variability/hospital_variability.sql
-select * from variablity limit 10;
+select * from variability limit 10;
 ```
 
 Here were my results:
@@ -163,7 +159,7 @@ Acute Myocardial Infarction (AMI) 30-Day Mortality Rate	|1 | 5624799338990183|
 Death rate for chronic obstructive pulmonary disease (COPD) |patients | 1.2384043641359914|
 |Rate of readmission for stroke patients | 1.147571309969155|
 
-##### Are average scores for hospital quality or procedural variability correlated with patient survey responses? 
+#### Are average scores for hospital quality or procedural variability correlated with patient survey responses? 
 
 I had originally chosen the "Timely and Effective" dataset to run this analysis, and got a negative correlation. After further exploration, that dataset has both positive and negative measures, making it difficult to arrive at a confident answer. I chose to run the correlation on the readmissions data instead. This also produced a negative correlation, but that is to be expected since the report states that "Lower percentages[SCORES] for readmission and mortality are better." Overall we did see that as deaths and readmissions went down, that the survey results tended to be better.[Code](https://github.com/rileyrustad/W205/blob/master/exercise_1/investigations/hospitals_and_patients/hospitals_and_patients.sql)
 
@@ -182,7 +178,7 @@ Given more time I'd like to split out the positive and negative measures of "Tim
 
 I also noticed that there were footnotes in most of the datasets, which gave more information about the sampling for specific measures. Things like "The number of cases/patients is too few to report.", "Data submitted were based on a sample of cases/patients.", and  "Results are based on a shorter time period than required." As of this point, my analysis doesn't take any of those into account. This information could be used to qualify/disqualify or maybe weight data to get a more accurate model.
 
-Last, I'd like to dig into the payments datasets to see whether the cost of a procedure correlates with the quality of the care one recieves.
+Last, I'd like to dig into the payments datasets to see whether the cost of a procedure correlates with the quality of the care one receives.
 
 | Measure ID | +/- | Measure Description |
 | --- | --- | --- |
