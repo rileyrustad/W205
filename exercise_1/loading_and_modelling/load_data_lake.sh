@@ -2,7 +2,7 @@
 
 
 # unzip the data into a temporary directory
-mkdir data/temp_data
+mkdir temp_data
 unzip hospital.zip -d temp_data
 
 
