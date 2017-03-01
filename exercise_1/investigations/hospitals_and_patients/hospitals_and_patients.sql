@@ -128,6 +128,6 @@ SORT BY SCORE DESC;
 -- specifies "Lower percentages for readmission and mortality are better."
 
 SELECT corr(a.SCORE, b.SCORE)
-FROM best_hcahps a INNER JOIN avg_readmissions b 
+FROM best_hcahps a INNER JOIN best_readmissions b 
 on a.PROVIDER_ID = b.PROVIDER_ID;
 

@@ -123,8 +123,18 @@ hive -e 'select * from best_state limit 10;'
 ```
 
 Here were my results:
-
-TODO
+| State | Score |
+| --- | --- |
+|DE | 0.03896103896103896 |
+|SD | 0.029801324503311258 |
+|AK | 0.023622047244094488 |
+|ME | 0.023376623376623377 |
+|AZ | 0.02142857142857143 |
+|ID | 0.019011406844106463 |
+|UT | 0.018867924528301886 |
+|CA | 0.018495684340320593 |
+|CO | 0.01765650080256822 |
+|MA | 0.017639077340569877 |
 
 ##### Which procedures have the greatest variability between hospitals? 
 I considered normalizing the data like in the previous problem, but since variance is dependent upon how spread out the data is, I thought that that might skew the results. I recognize that each procedure is fundamentally different, has different ranges, distributions, etc. That said, I've interpreted the question of variability as which procedure has the highest variance. 
@@ -140,7 +150,18 @@ select * from variablity limit 10;
 
 Here were my results:
 
-TODO
+| Measure Name | Variability Score |
+| --- | --- |
+|Pneumonia (PN) 30-Day Mortality Rate | 4.393994682056343|
+|Death rate for stroke patients | 2.768956135355112|
+|Heart failure (HF) 30-Day Readmission Rate | 2.2388284460593386|
+|Heart failure (HF) 30-Day Mortality Rate | 2.1368331864429013|
+|Pneumonia (PN) 30-Day Readmission Rate | 2.0501826390119673|
+Rate of readmission for chronic obstructive pulmonary disease (|COPD) patients | 1.6100084512077384|
+Acute Myocardial Infarction (AMI) 30-Day Mortality Rate	|1 | 5624799338990183|
+|Rate of readmission for CABG | 1.2709275754553797|
+Death rate for chronic obstructive pulmonary disease (COPD) |patients | 1.2384043641359914|
+|Rate of readmission for stroke patients | 1.147571309969155|
 
 ##### Are average scores for hospital quality or procedural variability correlated with patient survey responses? 
 
@@ -153,7 +174,7 @@ hive -e "SELECT corr(a.SCORE, b.SCORE) FROM best_hcahps a INNER JOIN avg_readmis
 
 Here were my results:
 
-TODO
+-0.22099430561850364
 
 ### Further Investigations
 

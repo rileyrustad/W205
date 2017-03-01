@@ -2,13 +2,13 @@
 -- "Timely and Effective Dataset", I used the "Readmissions
 -- and Deaths" Dataset.
 DROP TABLE variability;
-CREATE TABLE variability
-SELECT MEASURE_ID, var_samp(counts.SCORE) AS VARIANCE, 
-from cleaned_readmissions 
-GROUP BY MEASURE_ID
+CREATE TABLE variability AS
+SELECT MEASURE_NAME, var_samp(SCORE) AS VARIANCE
+FROM cleaned_readmissions 
+GROUP BY MEASURE_NAME
 SORT BY VARIANCE DESC;
 
-select * from variablity limit 10;
+select * from variability limit 10;
 
 
 

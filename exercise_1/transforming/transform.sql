@@ -28,6 +28,7 @@ ROW FORMAT DELIMITED
 AS SELECT
 CAST(PROVIDER_ID AS INT),
 MEASURE_ID,
+MEASURE_NAME,
 CAST(SCORE AS FLOAT),
 CAST(LOWER_ESTIMATE AS FLOAT), -- Unused, but could be used for future investigation
 CAST(HIGHER_ESTIMATE AS FLOAT) -- Unused, but could be used for future investigation
