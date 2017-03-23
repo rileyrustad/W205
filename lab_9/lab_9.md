@@ -8,6 +8,45 @@
 2. **List the 5 shortest paths between DR. STRANGE and DR. DOOM**
 	* The 5 shortest paths are different combinations of paths through two additional characters: SUMMERS NATAN CHRI and LYJA LAZERFIST [SKRU
 	* command:```MATCH p=(strange:Hero {name: 'DR. STRANGE/STEPHEN'})-[:APPEARED*0..2]-(doom:Hero {name: 'DR. DOOM/VICTOR VON'}) RETURN p, length(p) ORDER BY length(p) LIMIT 5```
+	```
+╒══════════════════════════════╤═══════════╕
+│"p"                           │"length(p)"│
+╞══════════════════════════════╪═══════════╡
+│[{"name":"DR. STRANGE/STEPHEN"│"1"        │
+│,"degree":"777"},{"w":"8"},{"n│           │
+│ame":"DR. DOOM/VICTOR VON","de│           │
+│gree":"441"}]                 │           │
+├──────────────────────────────┼───────────┤
+│[{"name":"DR. STRANGE/STEPHEN"│"1"        │
+│,"degree":"777"},{"w":"12"},{"│           │
+│name":"DR. DOOM/VICTOR VON","d│           │
+│egree":"441"}]                │           │
+├──────────────────────────────┼───────────┤
+│[{"name":"DR. STRANGE/STEPHEN"│"2"        │
+│,"degree":"777"},{"w":"1"},{"n│           │
+│ame":"SUMMERS, NATHAN CHRI","d│           │
+│egree":"422"},{"name":"SUMMERS│           │
+│, NATHAN CHRI","degree":"422"}│           │
+│,{"w":"1"},{"name":"DR. DOOM/V│           │
+│ICTOR VON","degree":"441"}]   │           │
+├──────────────────────────────┼───────────┤
+│[{"name":"DR. STRANGE/STEPHEN"│"2"        │
+│,"degree":"777"},{"w":"3"},{"d│           │
+│egree":"197","name":"LYJA LAZE│           │
+│RFIST [SKRU"},{"degree":"197",│           │
+│"name":"LYJA LAZERFIST [SKRU"}│           │
+│,{"w":"10"},{"name":"DR. DOOM/│           │
+│VICTOR VON","degree":"441"}]  │           │
+├──────────────────────────────┼───────────┤
+│[{"name":"DR. STRANGE/STEPHEN"│"2"        │
+│,"degree":"777"},{"w":"3"},{"d│           │
+│egree":"197","name":"LYJA LAZE│           │
+│RFIST [SKRU"},{"degree":"197",│           │
+│"name":"LYJA LAZERFIST [SKRU"}│           │
+│,{"w":"11"},{"name":"DR. DOOM/│           │
+│VICTOR VON","degree":"441"}]  │           │
+└──────────────────────────────┴───────────┘
+```
 	![](Doom_Strange_Shortest_Path5.png)
 3. **List 5 Friends of Friends with the most connections and COLOSSUS II.**
 	* command:```MATCH (col:Hero { name: 'COLOSSUS II/PETER RA' })-[:APPEARED*2..2]-(friend_of_friend) WHERE NOT (col)-[:APPEARED]-(friend_of_friend) AND friend_of_friend.name <> 'COLOSSUS II/PETER RA' RETURN friend_of_friend.name, COUNT(*) ORDER BY COUNT(*) DESC , friend_of_friend.name LIMIT 5```
