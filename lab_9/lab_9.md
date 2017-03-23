@@ -1,7 +1,6 @@
 # Lab 9
 
-**1. What is the shortest path between DR. STRANGE and DR. DOOM?**
-	
+__1. What is the shortest path between DR. STRANGE and DR. DOOM?__
 	* The shortest path is 1 since they appear together.
 	* command:```MATCH p=(strange:Hero {name: 'DR. STRANGE/STEPHEN'})-[:APPEARED*0..2]-(doom:Hero {name: 'DR. DOOM/VICTOR VON'}) RETURN p, length(p) ORDER BY length(p) LIMIT 1```
 	* ![](Doom_Strange_Shortest_Path1.png) 
