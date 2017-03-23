@@ -9,7 +9,8 @@
 	* command:```MATCH p=(strange:Hero {name: 'DR. STRANGE/STEPHEN'})-[:APPEARED*0..2]-(doom:Hero {name: 'DR. DOOM/VICTOR VON'}) RETURN p, length(p) ORDER BY length(p) LIMIT 5```
 	* The 5 shortest paths are different combinations of paths through two additional characters: SUMMERS NATAN CHRI and LYJA LAZERFIST [SKRU
 
-	```╒══════════════════════════════╤═══════════╕
+```
+╒══════════════════════════════╤═══════════╕
 │"p"                           │"length(p)"│
 ╞══════════════════════════════╪═══════════╡
 │[{"name":"DR. STRANGE/STEPHEN"│"1"        │
@@ -45,7 +46,8 @@
 │"name":"LYJA LAZERFIST [SKRU"}│           │
 │,{"w":"11"},{"name":"DR. DOOM/│           │
 │VICTOR VON","degree":"441"}]  │           │
-└──────────────────────────────┴───────────┘```
+└──────────────────────────────┴───────────┘
+```
 	![](Doom_Strange_Shortest_Path5.png)
 3. **List 5 Friends of Friends with the most connections and COLOSSUS II.**
 	* command:```MATCH (col:Hero { name: 'COLOSSUS II/PETER RA' })-[:APPEARED*2..2]-(friend_of_friend) WHERE NOT (col)-[:APPEARED]-(friend_of_friend) AND friend_of_friend.name <> 'COLOSSUS II/PETER RA' RETURN friend_of_friend.name, COUNT(*) ORDER BY COUNT(*) DESC , friend_of_friend.name LIMIT 5```
