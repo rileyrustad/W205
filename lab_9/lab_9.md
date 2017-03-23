@@ -6,8 +6,8 @@
 	![](Doom_Strange_Shortest_Path1.png) 
 
 2. **List the 5 shortest paths between DR. STRANGE and DR. DOOM**
-	* The 5 shortest paths are different combinations of paths through two additional characters: SUMMERS NATAN CHRI and LYJA LAZERFIST [SKRU
 	* command:```MATCH p=(strange:Hero {name: 'DR. STRANGE/STEPHEN'})-[:APPEARED*0..2]-(doom:Hero {name: 'DR. DOOM/VICTOR VON'}) RETURN p, length(p) ORDER BY length(p) LIMIT 5```
+	* The 5 shortest paths are different combinations of paths through two additional characters: SUMMERS NATAN CHRI and LYJA LAZERFIST [SKRU
 
 	```╒══════════════════════════════╤═══════════╕
 │"p"                           │"length(p)"│
