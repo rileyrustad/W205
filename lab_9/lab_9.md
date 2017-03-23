@@ -48,6 +48,7 @@
 │VICTOR VON","degree":"441"}]  │           │
 └──────────────────────────────┴───────────┘
 ```
+
 	![](Doom_Strange_Shortest_Path5.png)
 3. **List 5 Friends of Friends with the most connections and COLOSSUS II.**
 	* command:```MATCH (col:Hero { name: 'COLOSSUS II/PETER RA' })-[:APPEARED*2..2]-(friend_of_friend) WHERE NOT (col)-[:APPEARED]-(friend_of_friend) AND friend_of_friend.name <> 'COLOSSUS II/PETER RA' RETURN friend_of_friend.name, COUNT(*) ORDER BY COUNT(*) DESC , friend_of_friend.name LIMIT 5```
