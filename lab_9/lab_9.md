@@ -32,6 +32,7 @@
 	![](Iron_Friend.png)
 5. **Discover how the Avengers grew over time from 5 to 10. Find team members starting with 5 and incrementing to 10. Who was added to the team? Is the resulting graph ever not fully connected?**
 	* The Characters Added in order are: "WONDER MAN/SIMON WIL", "HAWK", "IRON MAN IV/JAMES R.", "JARVIS, EDWIN", "MR. FANTASTIC/REED R"
+	* The graph appears to be fully connected.
 
 
 
