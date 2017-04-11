@@ -33,6 +33,7 @@ The architecture is such that Apache Storm parses the streaming data, passing fr
 4. If dependencies aren't installed run `pip install psycopg2` and `pip install tweepy`
 5. Start the application `streamparse run`
 6. One enough data is collected press **ctrl-c**
+6. Navigate back up a directory `cd ..`
 7. To view the full results run `python finalresults.py`
 8. To see the results of a specific word, pass a word into our script `python finalresults.py <word>` (insert your specific word instead of <word>)
 9. To see the results of all words within a specified range run `python histogram.py <#1>,<#2>`
