@@ -16,3 +16,5 @@
 8. To see the results of a specific word, pass a word into our script `python finalresults.py <word>` (insert your specific word instead of <word>)
 9. To see the results of all words within a specified range run `python histogram.py <#1>,<#2>`
 
+### Results Histogram Plot 
+![](screenshots/screenshot-histogramPlot.png)
